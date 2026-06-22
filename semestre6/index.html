@@ -1,114 +1,223 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sexto Semestre</title>
-
 <style>
+:root{
+    --bg:#090b18;
+    --panel:#10172f;
+    --text:#e7f2ff;
+    --muted:#94a5c4;
+    --accent:#3fd7ff;
+    --accent2:#ff4ea8;
+    --shadow:#041225;
+}
+*{box-sizing:border-box}
+.bg-video-s6{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:.88; }
+.bg-overlay-s6{ position:fixed; inset:0; background:linear-gradient(180deg, rgba(9,11,24,.65) 0%, rgba(5,8,18,.75) 70%, rgba(5,8,18,.85) 100%); z-index:-1; pointer-events:none; }
 body{
-    font-family: Arial, sans-serif;
-    background:#f4f6f9;
     margin:0;
-    padding:40px;
+    min-height:100vh;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #070b17;
+    color:var(--text);
+    display:grid;
+    place-items:center;
+    padding:24px;
+}
+.container{
+    width:min(100%, 980px);
     text-align:center;
 }
-
+.header-card{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    padding:24px 32px;
+    border-radius:26px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 20px 50px rgba(0,0,0,.35), inset 0 1px 1px rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    margin-bottom:32px;
+    transform-style:preserve-3d;
+}
+.header-card::before{
+    content:'';
+    position:absolute;
+    top:-40px;
+    left:50%;
+    transform:translateX(-50%);
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(63,215,255,.16), transparent 55%);
+    filter:blur(24px);
+    pointer-events:none;
+    z-index:-1;
+}
 h1{
-    color:#1e3a8a;
-    margin-bottom:10px;
+    margin:0;
+    font-size:clamp(2.4rem,4vw,3.6rem);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    position:relative;
 }
-
-p{
-    color:#666;
-    margin-bottom:30px;
-}
-
-.contenedor{
-    max-width:900px;
-    margin:auto;
-}
-
-.boton{
+h1 span{
     display:block;
-    background:white;
-    margin:15px 0;
-    padding:20px;
-    border-radius:12px;
+    font-size:1rem;
+    color:var(--accent);
+    letter-spacing:.18em;
+    margin-top:-4px;
+    font-weight:600;
+}
+p.description{
+    margin:12px auto 0;
+    max-width:680px;
+    color:var(--muted);
+    font-size:1rem;
+    line-height:1.7;
+}
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:22px;
+    margin:36px 0 24px;
+}
+.card{
+    position:relative;
+    padding:26px 22px;
+    border-radius:24px;
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 20px 50px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08);
+    transition:transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease, border-color .4s ease;
+    transform-style:preserve-3d;
+    cursor:pointer;
     text-decoration:none;
-    color:#333;
-    font-size:18px;
-    font-weight:bold;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    transition:0.3s;
+    color:var(--text);
+    overflow:hidden;
 }
-
-.boton:hover{
-    transform:translateY(-3px);
+.card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(63,215,255,.12), transparent 45%);
+    opacity:.7;
+    pointer-events:none;
+    transform:translateZ(0);
 }
-
-.codigo{
-    display:block;
-    margin-top:5px;
-    color:#666;
-    font-size:14px;
+.card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at top left, rgba(255,78,168,.18), transparent 28%);
+    pointer-events:none;
+    opacity:.6;
 }
-
-.volver{
-    display:inline-block;
-    margin-top:25px;
-    padding:12px 20px;
-    background:#1e3a8a;
-    color:white;
+.card:hover{
+    transform:translateY(-16px) rotateX(4deg) scale(1.03);
+    border-color:rgba(63,215,255,.55);
+    box-shadow:0 30px 80px rgba(0,0,0,.35), 0 0 28px rgba(63,215,255,.12);
+}
+.card-icon{
+    font-size:1.85rem;
+    margin-bottom:16px;
+    z-index:1;
+}
+.card-title{
+    font-size:1.15rem;
+    font-weight:700;
+    line-height:1.4;
+    margin:0;
+    text-align:left;
+    z-index:1;
+}
+.card-code{
+    display:inline-flex;
+    margin-top:14px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    color:var(--accent);
+    font-size:.95rem;
+    letter-spacing:.08em;
+    z-index:1;
+}
+.back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    justify-content:center;
+    padding:16px 26px;
+    border-radius:999px;
+    background:rgba(63,215,255,.14);
+    color:var(--text);
     text-decoration:none;
-    border-radius:8px;
+    font-weight:700;
+    border:1px solid rgba(63,215,255,.24);
+    box-shadow:0 18px 40px rgba(0,0,0,.2);
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.back-link:hover{
+    transform:translateY(-4px);
+    background:rgba(63,215,255,.22);
+    box-shadow:0 26px 48px rgba(0,0,0,.3);
+}
+@media (max-width:640px){
+    body{padding:16px;}
+    .header-card{padding:22px 18px;}
+    .cards{gap:18px;}
+    .card{padding:20px;}
 }
 </style>
-
 </head>
 <body>
-
-<h1>🎓 Sexto Semestre</h1>
-<p>Universidad Nacional del Altiplano - Puno</p>
-
-<div class="contenedor">
-
-<a class="boton" href="314.pdf" target="_blank">
-📊 Aprendizaje No Supervisado
-<span class="codigo">EST314</span>
-</a>
-
-<a class="boton" href="316.pdf" target="_blank">
-🌐 Arquitectura de Redes y Protocolos
-<span class="codigo">EST316</span>
-</a>
-
-<a class="boton" href="315.pdf" target="_blank">
-📋 Gestión de Proyectos TICs
-<span class="codigo">EST315</span>
-</a>
-
-<a class="boton" href="210.pdf" target="_blank">
-📈 Modelos Lineales
-<span class="codigo">EST210</span>
-</a>
-
-<a class="boton" href="209.pdf" target="_blank">
-📉 Regresión Lineal y No Lineal
-<span class="codigo">EST209</span>
-</a>
-
-<a class="boton" href="317.pdf" target="_blank">
-⏳ Series de Tiempo
-<span class="codigo">EST317</span>
-</a>
-
+<video class="bg-video-s6" autoplay muted loop playsinline>
+  <source src="../subfondo.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay-s6"></div>
+<div class="container">
+    <div class="header-card">
+        <h1>Sexto Semestre<span>UNAP · Ingeniería Estadística e Informática</span></h1>
+        <p class="description">Explora los apuntes y materiales del sexto semestre con un estilo moderno y una experiencia visual 3D. Haz clic en cada tarjeta para abrir su contenido.</p>
+    </div>
+    <div class="cards">
+        <a class="card" href="314.pdf" target="_blank">
+            <div class="card-icon">📊</div>
+            <h2 class="card-title">Aprendizaje No Supervisado</h2>
+            <span class="card-code">EST314</span>
+        </a>
+        <a class="card" href="316.pdf" target="_blank">
+            <div class="card-icon">🌐</div>
+            <h2 class="card-title">Arquitectura de Redes y Protocolos</h2>
+            <span class="card-code">EST316</span>
+        </a>
+        <a class="card" href="315.pdf" target="_blank">
+            <div class="card-icon">📋</div>
+            <h2 class="card-title">Gestión de Proyectos TICs</h2>
+            <span class="card-code">EST315</span>
+        </a>
+        <a class="card" href="210.pdf" target="_blank">
+            <div class="card-icon">📈</div>
+            <h2 class="card-title">Modelos Lineales</h2>
+            <span class="card-code">EST210</span>
+        </a>
+        <a class="card" href="209.pdf" target="_blank">
+            <div class="card-icon">📉</div>
+            <h2 class="card-title">Regresión Lineal y No Lineal</h2>
+            <span class="card-code">EST209</span>
+        </a>
+        <a class="card" href="317.pdf" target="_blank">
+            <div class="card-icon">⏳</div>
+            <h2 class="card-title">Series de Tiempo</h2>
+            <span class="card-code">EST317</span>
+        </a>
+    </div>
+    <a class="back-link" href="../">⬅ Volver al Portal Académico</a>
 </div>
-
-<a class="volver" href="../">
-⬅ Volver al Portal Académico
-</a>
-
 </body>
 </html>
